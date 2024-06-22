@@ -1,8 +1,11 @@
 
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather'
 
 const LoginScreen = ({navigation, setIsLoggedIn}) => {
+
+  const[isSecureText, setIsSecureText] = useState(true)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,9 +23,16 @@ const LoginScreen = ({navigation, setIsLoggedIn}) => {
 
         <Text style={styles.welcomeText}>Welcome to{'\n'}KJSCE's CIMS</Text>
         
-        <TextInput placeholder="Username" style={styles.input} />
-        <TextInput placeholder="Password" secureTextEntry style={styles.input} />
-        
+        <TextInput placeholder="Email ID" style={styles.input} />
+
+        <View style={styles.inputContainer}> 
+          <TextInput placeholder="Password" secureTextEntry={isSecureText} style={styles.input} />
+
+          <TouchableOpacity style={styles.eye} onPress={() => {setIsSecureText((x) => !x)}}>
+            <Feather name={isSecureText ? 'eye' : 'eye-off'} size={22} />
+          </TouchableOpacity>
+
+        </View>
         <TouchableOpacity style={styles.loginButton} onPress={() => {
             setIsLoggedIn(true);
         }}>
@@ -39,6 +49,7 @@ const LoginScreen = ({navigation, setIsLoggedIn}) => {
       <Text style={styles.resetText}>Forgot Password? <Text style={styles.resetLinkText} onPress={()=>{
         navigation.navigate('ResetScreen')}
       }>Reset</Text></Text>
+
     
     </SafeAreaView>
   );
@@ -72,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 42,
     color: 'black',
     fontWeight: '600',
-    marginBottom: 48,
+    marginBottom: 56,
     textAlign: 'center',
     fontFamily: 'Roboto-Regular',
   },
@@ -94,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 30,
-    marginBottom: 60
+    marginBottom: 70
   },
   loginButtonText: {
     color: '#fff',
@@ -104,7 +115,7 @@ const styles = StyleSheet.create({
   logoView:{
     display: 'flex',
     alignItems:'center',
-    marginBottom: 48
+    marginBottom: 52
   },
 
   footerText: {
@@ -137,6 +148,21 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     marginTop: 20
+  },
+
+
+  inputContainer:{
+    width:'100%',
+    display:'flex',
+    justifyContent:'center',
+    flexDirection:'row',
+    alignItems:'center'
+
+  },
+
+  eye:{
+    position:'absolute',
+    right: '15%'
   }
 });
 
